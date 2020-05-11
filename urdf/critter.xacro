@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="open_critter" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find open_critter)/urdf/inertia.xacro"/>
+  <xacro:include filename="$(find open_critter)/urdf/leg.xacro"/>
+
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 3.14" xyz="0.0 0.0 0.04"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/body.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <xacro:leg name="front_left" parent_link="base_link">
+    <origin xyz="0.03 0.035 0.0225" rpy="0 0 ${pi}"/>
+  </xacro:leg>
+
+</robot>

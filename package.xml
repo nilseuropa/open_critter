@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>open_critter</name>
+  <version>0.0.1</version>
+  <description>Open Critter</description>
+  <maintainer email="marton@neorobot.hu">nils</maintainer>
+  <license>NO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+</package>
