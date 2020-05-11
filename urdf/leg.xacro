@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="leg" params="name parent_link *origin">
+  <!-- one kind of leg -->
+
+  <xacro:macro name="odd_leg" params="name parent_link *origin">
 
     <joint name="${name}_coxa_base_joint" type="fixed">
       <parent link="${parent_link}"/>
@@ -22,7 +24,7 @@
       <parent link="${name}_coxa_servo"/>
       <child link="${name}_coxa_link"/>
       <origin rpy="0 0 0" xyz="-0.005 0 -0.002"/>
-      <limit effort="100" velocity="0.1" lower="-2.0" upper="0.7"/>
+      <limit effort="100" velocity="0.1" lower="-1.7" upper="0.7"/>
       <axis xyz="0 0 1"/>
     </joint>
 
@@ -98,6 +100,108 @@
         </geometry>
       </visual>
     </link>
+
+</xacro:macro>
+
+<!-- the other kind of leg -->
+
+<xacro:macro name="even_leg" params="name parent_link *origin">
+
+  <joint name="${name}_coxa_base_joint" type="fixed">
+    <parent link="${parent_link}"/>
+    <child link="${name}_coxa_servo"/>
+    <xacro:insert_block name="origin"/>
+  </joint>
+
+  <link name="${name}_coxa_servo">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="${name}_coxa_servo_joint" type="revolute">
+    <parent link="${name}_coxa_servo"/>
+    <child link="${name}_coxa_link"/>
+    <origin rpy="0 0 ${pi}" xyz="-0.005 0 -0.002"/>
+    <limit effort="100" velocity="0.1" lower="-0.7" upper="1.7"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="${name}_coxa_link">
+    <visual>
+    <origin rpy="0 0 ${pi}" xyz="-0.002 -0.016 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/coxa_rear.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="${name}_femur_servo_coxa_joint" type="fixed">
+    <parent link="${name}_coxa_link"/>
+    <child link="${name}_femur_servo"/>
+    <origin rpy="0 0 0" xyz="-0.005 -0.0275 0"/>
+  </joint>
+
+  <link name="${name}_femur_servo">
+    <visual>
+      <origin rpy="0 ${pi/2} ${pi}" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="${name}_femur_servo_joint" type="revolute">
+    <parent link="${name}_femur_servo"/>
+    <child link="${name}_femur_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.005"/>
+    <limit effort="100" velocity="0.1" lower="-2.0" upper="0.7"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <link name="${name}_femur_link">
+    <visual>
+    <origin rpy="0 ${pi} 0" xyz="0.0025 -0.0275 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/femur.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="${name}_tibia_servo_joint" type="revolute">
+    <parent link="${name}_femur_link"/>
+    <child link="${name}_tibia_servo"/>
+    <origin rpy="0 0 0" xyz="0 -0.055 0"/>
+    <limit effort="100" velocity="0.1" lower="-4.0" upper="1.0"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <link name="${name}_tibia_servo">
+    <visual>
+      <origin rpy="0 ${pi/2} ${pi}" xyz="0 0 -0.005"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="${name}_tibia_servo_femur_joint" type="fixed">
+    <parent link="${name}_tibia_servo"/>
+    <child link="${name}_tibia_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <link name="${name}_tibia_link">
+    <visual>
+      <origin rpy="0 0 ${pi}" xyz="0.007 0 -0.03"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/tibia_front.dae"/>
+      </geometry>
+    </visual>
+  </link>
 
 </xacro:macro>
 
