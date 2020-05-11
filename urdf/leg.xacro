@@ -196,9 +196,9 @@
 
   <link name="${name}_tibia_link">
     <visual>
-      <origin rpy="0 0 ${pi}" xyz="0.007 0 -0.03"/>
+      <origin rpy="0 0 0" xyz="0.007 0 -0.03"/>
       <geometry>
-        <mesh filename="package://open_critter/meshes/collada/tibia_front.dae"/>
+        <mesh filename="package://open_critter/meshes/collada/tibia_rear.dae"/>
       </geometry>
     </visual>
   </link>
