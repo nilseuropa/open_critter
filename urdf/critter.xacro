@@ -11,22 +11,28 @@
         <mesh filename="package://open_critter/meshes/collada/body.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 0 3.14" xyz="0.0 0.0 0.04"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/body.dae"/>
+      </geometry>
+    </collision>
   </link>
 
-  <xacro:odd_leg name="front_left" parent_link="base_link">
+  <xacro:leg name="front_left" odd="true" parent_link="base_link">
     <origin xyz="0.03 0.035 0.0225" rpy="0 0 ${pi}"/>
-  </xacro:odd_leg>
+  </xacro:leg>
 
-  <xacro:even_leg name="rear_left" parent_link="base_link">
+  <xacro:leg name="rear_left" odd="false" parent_link="base_link">
     <origin xyz="-0.03 0.035 0.0225" rpy="0 0 0"/>
-  </xacro:even_leg>
+  </xacro:leg>
 
-  <xacro:odd_leg name="rear_right" parent_link="base_link">
+  <xacro:leg name="rear_right" odd="true" parent_link="base_link">
     <origin xyz="-0.03 -0.035 0.0225" rpy="0 0 0"/>
-  </xacro:odd_leg>
+  </xacro:leg>
 
-  <xacro:even_leg name="front_right" parent_link="base_link">
+  <xacro:leg name="front_right" odd="false" parent_link="base_link">
     <origin xyz="0.03 -0.035 0.0225" rpy="0 0 ${pi}"/>
-  </xacro:even_leg>
+  </xacro:leg>
 
 </robot>
