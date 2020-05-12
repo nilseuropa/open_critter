@@ -27,6 +27,17 @@
       <limit effort="100" velocity="0.1" lower="-1.7" upper="0.7"/>
       <axis xyz="0 0 1"/>
     </joint>
+    <transmission name="${name}_coxa_servo_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${name}_coxa_servo_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${name}_coxa_servo_actuator">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+            <motorTorqueConstant>1</motorTorqueConstant>
+        </actuator>
+    </transmission>
 
     <link name="${name}_coxa_link">
       <visual>
@@ -59,6 +70,17 @@
       <limit effort="100" velocity="0.1" lower="-2.0" upper="0.7"/>
       <axis xyz="1 0 0"/>
     </joint>
+    <transmission name="${name}_femur_servo_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${name}_femur_servo_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${name}_femur_servo_actuator">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+            <motorTorqueConstant>1</motorTorqueConstant>
+        </actuator>
+    </transmission>
 
     <link name="${name}_femur_link">
       <visual>
@@ -76,6 +98,17 @@
       <limit effort="100" velocity="0.1" lower="-4.0" upper="1.0"/>
       <axis xyz="1 0 0"/>
     </joint>
+    <transmission name="${name}_tibia_servo_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${name}_tibia_servo_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${name}_tibia_servo_actuator">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+            <motorTorqueConstant>1</motorTorqueConstant>
+        </actuator>
+    </transmission>
 
     <link name="${name}_tibia_servo">
       <visual>
@@ -129,7 +162,18 @@
     <limit effort="100" velocity="0.1" lower="-0.7" upper="1.7"/>
     <axis xyz="0 0 1"/>
   </joint>
-
+  <transmission name="${name}_coxa_servo_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_coxa_servo_joint">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_coxa_servo_actuator">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+          <motorTorqueConstant>1</motorTorqueConstant>
+      </actuator>
+  </transmission>
+  
   <link name="${name}_coxa_link">
     <visual>
     <origin rpy="0 0 ${pi}" xyz="-0.002 -0.016 0"/>
@@ -161,6 +205,17 @@
     <limit effort="100" velocity="0.1" lower="-2.0" upper="0.7"/>
     <axis xyz="1 0 0"/>
   </joint>
+  <transmission name="${name}_femur_servo_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_femur_servo_joint">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_femur_servo_actuator">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+          <motorTorqueConstant>1</motorTorqueConstant>
+      </actuator>
+  </transmission>
 
   <link name="${name}_femur_link">
     <visual>
@@ -178,6 +233,17 @@
     <limit effort="100" velocity="0.1" lower="-4.0" upper="1.0"/>
     <axis xyz="1 0 0"/>
   </joint>
+  <transmission name="${name}_tibia_servo_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}_tibia_servo_joint">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}_tibia_servo_actuator">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+          <motorTorqueConstant>1</motorTorqueConstant>
+      </actuator>
+  </transmission>
 
   <link name="${name}_tibia_servo">
     <visual>
