@@ -28,7 +28,7 @@
     <xacro:property name="tibia_x" value="-0.0025"/>
   </xacro:unless>
 
-  <joint name="${name}_coxa_base_joint" type="fixed">
+  <joint name="${name}_base" type="fixed">
     <parent link="${parent_link}"/>
     <child link="${name}_coxa_servo"/>
     <xacro:insert_block name="origin"/>
@@ -41,24 +41,39 @@
         <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.01 0.03"/>
+      </geometry>
+        <mass value="0.009"/>
+        <box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+    </inertial>
   </link>
 
-  <joint name="${name}_coxa_servo_joint" type="revolute">
+  <joint name="${name}_coxa_joint" type="revolute">
     <parent link="${name}_coxa_servo"/>
     <child link="${name}_coxa_link"/>
     <origin rpy="0 0 ${yaw}" xyz="-0.005 0 -0.002"/>
-    <limit effort="100" velocity="0.1" lower="${coxa_lower}" upper="${coxa_upper}"/>
+    <limit effort="100" velocity="1.0" lower="${coxa_lower}" upper="${coxa_upper}"/>
     <axis xyz="0 0 1"/>
+    <!--dynamics damping="0.5" friction="0.0"/-->
   </joint>
-  <transmission name="${name}_coxa_servo_transmission">
+  <transmission name="${name}_coxa_transmission">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${name}_coxa_servo_joint">
+      <joint name="${name}_coxa_joint">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
-      <actuator name="${name}_coxa_servo_actuator">
+      <actuator name="${name}_coxa_actuator">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
           <mechanicalReduction>1</mechanicalReduction>
-          <motorTorqueConstant>1</motorTorqueConstant>
+          <motorTorqueConstant>10</motorTorqueConstant>
       </actuator>
   </transmission>
 
@@ -69,9 +84,23 @@
         <mesh filename="${coxa_model}"/>
       </geometry>
     </visual>
+    <collision>
+    <origin rpy="0 0 ${yaw}" xyz="${side*0.002} -0.016 0"/>
+      <geometry>
+        <mesh filename="${coxa_model}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.01 0.03"/>
+      </geometry>
+        <mass value="0.001"/>
+        <box_inertia m="0.001" x="0.04" y="0.01" z="0.03" />
+    </inertial>
   </link>
 
-  <joint name="${name}_femur_servo_coxa_joint" type="fixed">
+  <joint name="${name}_femur_servo_to_coxa_joint" type="fixed">
     <parent link="${name}_coxa_link"/>
     <child link="${name}_femur_servo"/>
     <origin rpy="0 0 0" xyz="${side*-0.005} -0.0275 0"/>
@@ -84,24 +113,39 @@
         <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 ${pi/2} ${nyaw}" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 ${pi/2} ${nyaw}" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.01 0.03"/>
+      </geometry>
+        <mass value="0.009"/>
+        <box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+    </inertial>
   </link>
 
-  <joint name="${name}_femur_servo_joint" type="revolute">
+  <joint name="${name}_femur_joint" type="revolute">
     <parent link="${name}_femur_servo"/>
     <child link="${name}_femur_link"/>
     <origin rpy="0 0 0" xyz="${servo_x} 0 0.005"/>
-    <limit effort="100" velocity="0.1" lower="-2.0" upper="0.7"/>
+    <limit effort="100" velocity="1.0" lower="-2.0" upper="0.7"/>
     <axis xyz="1 0 0"/>
+    <!--dynamics damping="0.5" friction="0.0"/-->
   </joint>
-  <transmission name="${name}_femur_servo_transmission">
+  <transmission name="${name}_femur_transmission">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${name}_femur_servo_joint">
+      <joint name="${name}_femur_joint">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
-      <actuator name="${name}_femur_servo_actuator">
+      <actuator name="${name}_femur_actuator">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
           <mechanicalReduction>1</mechanicalReduction>
-          <motorTorqueConstant>1</motorTorqueConstant>
+          <motorTorqueConstant>10</motorTorqueConstant>
       </actuator>
   </transmission>
 
@@ -112,24 +156,39 @@
         <mesh filename="package://open_critter/meshes/collada/femur.dae"/>
       </geometry>
     </visual>
+    <collision>
+    <origin rpy="0 ${nyaw} 0" xyz="0.0025 -0.0275 0"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/femur.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.01 0.03"/>
+      </geometry>
+        <mass value="0.002"/>
+        <box_inertia m="0.002" x="0.05" y="0.01" z="0.03" />
+    </inertial>
   </link>
 
-  <joint name="${name}_tibia_servo_joint" type="revolute">
+  <joint name="${name}_tibia_joint" type="revolute">
     <parent link="${name}_femur_link"/>
     <child link="${name}_tibia_servo"/>
     <origin rpy="0 0 0" xyz="0 -0.055 0"/>
-    <limit effort="100" velocity="0.1" lower="-4.0" upper="1.0"/>
+    <limit effort="100" velocity="1.0" lower="-4.0" upper="1.0"/>
     <axis xyz="1 0 0"/>
+    <!--dynamics damping="0.5" friction="0.0"/-->
   </joint>
-  <transmission name="${name}_tibia_servo_transmission">
+  <transmission name="${name}_tibia_transmission">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${name}_tibia_servo_joint">
+      <joint name="${name}_tibia_joint">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
-      <actuator name="${name}_tibia_servo_actuator">
+      <actuator name="${name}_tibia_actuator">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
           <mechanicalReduction>1</mechanicalReduction>
-          <motorTorqueConstant>1</motorTorqueConstant>
+          <motorTorqueConstant>10</motorTorqueConstant>
       </actuator>
   </transmission>
 
@@ -140,9 +199,23 @@
         <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 ${pi/2} ${nyaw}" xyz="${side*servo_x} 0 -0.005"/>
+      <geometry>
+        <mesh filename="package://open_critter/meshes/collada/servo.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 ${pi/2} ${nyaw}" xyz="${side*servo_x} 0 -0.005"/>
+      <geometry>
+        <box size="0.02 0.01 0.03"/>
+      </geometry>
+        <mass value="0.009"/>
+        <box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+    </inertial>
   </link>
 
-  <joint name="${name}_tibia_servo_femur_joint" type="fixed">
+  <joint name="${name}_tibia_servo_to_femur_joint" type="fixed">
     <parent link="${name}_tibia_servo"/>
     <child link="${name}_tibia_link"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -155,7 +228,32 @@
         <mesh filename="${tibia_model}"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 0 ${nyaw}" xyz="${tibia_x} 0 -0.03"/>
+      <geometry>
+        <mesh filename="${tibia_model}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.005 0.005"/>
+      </geometry>
+        <mass value="0.001"/>
+        <box_inertia m="0.001" x="0.1" y="0.005" z="0.005" />
+    </inertial>
   </link>
+
+  <!-- Rubber surface -->
+  <gazebo reference="${name}_tibia_link">
+    <mu1 value="5.0"/>
+    <mu2 value="0.5"/>
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <fdir1 value="1 1 0"/>
+    <turnGravityOff>false</turnGravityOff>
+    <selfCollide>true</selfCollide>
+  </gazebo>
 
 </xacro:macro>
 
