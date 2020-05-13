@@ -26,5 +26,6 @@
   <!-- controllers -->
   <rosparam file="$(find open_critter)/config/control.yaml" command="load"/>
   <node name="controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" ns="open_critter" output="screen" args="spawn joint_state_controller front_left_coxa front_right_coxa rear_right_coxa rear_left_coxa front_left_femur front_right_femur rear_right_femur rear_left_femur front_left_tibia front_right_tibia rear_right_tibia rear_left_tibia"/>
+  <node name="gait_controller" pkg="open_critter" type="gait_controller"/>
 
 </launch>

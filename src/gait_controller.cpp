@@ -74,7 +74,7 @@ int main(int argc, char** argv){
     msg.data = map(x, 0, 180, -0.5, 1.0);
     RLTp.publish(msg);
 
-    ros::Duration(2.0).sleep();
+    ros::Duration(1.0).sleep();
     //r.sleep();
   }
 }

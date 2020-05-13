@@ -5,6 +5,7 @@
   <xacro:include filename="$(find open_critter)/urdf/leg.xacro"/>
 
   <xacro:property name="use_stand" value="false"/>
+  <xacro:property name="rubber_paw" value="true"/>
 
   <xacro:if value="${use_stand}">
     <link name="stand_link">
@@ -59,8 +60,6 @@
         <box_inertia m="0.2" x="0.1" y="0.05" z="0.03" />
     </inertial>
   </link>
-
-  <xacro:property name="rubber_paw" value="true"/>
 
   <xacro:leg name="front_left" odd="true" paw="${rubber_paw}" parent_link="base_link">
     <origin xyz="0.03 0.035 0.0225" rpy="0 0 ${pi}"/>
