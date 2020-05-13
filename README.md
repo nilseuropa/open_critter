@@ -13,6 +13,5 @@
 * DC jack terminalblock adapter _( Delock )_
 * Tattu 2500mAh / 7.4V LiPo pack _( FatShark battery )_
 
-## Robot description ##
-
-![](doc/urdf.gif)
+## Simulation ##
+![](doc/sim.gif)

@@ -60,19 +60,21 @@
     </inertial>
   </link>
 
-  <xacro:leg name="front_left" odd="true" parent_link="base_link">
+  <xacro:property name="rubber_paw" value="true"/>
+
+  <xacro:leg name="front_left" odd="true" paw="${rubber_paw}" parent_link="base_link">
     <origin xyz="0.03 0.035 0.0225" rpy="0 0 ${pi}"/>
   </xacro:leg>
 
-  <xacro:leg name="rear_left" odd="false" parent_link="base_link">
+  <xacro:leg name="rear_left" odd="false" paw="${rubber_paw}" parent_link="base_link">
     <origin xyz="-0.03 0.035 0.0225" rpy="0 0 0"/>
   </xacro:leg>
 
-  <xacro:leg name="rear_right" odd="true" parent_link="base_link">
+  <xacro:leg name="rear_right" odd="true" paw="${rubber_paw}" parent_link="base_link">
     <origin xyz="-0.03 -0.035 0.0225" rpy="0 0 0"/>
   </xacro:leg>
 
-  <xacro:leg name="front_right" odd="false" parent_link="base_link">
+  <xacro:leg name="front_right" odd="false" paw="${rubber_paw}" parent_link="base_link">
     <origin xyz="0.03 -0.035 0.0225" rpy="0 0 ${pi}"/>
   </xacro:leg>
 

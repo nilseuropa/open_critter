@@ -1,54 +1,54 @@
 open_critter:
-    gazebo_ros_control:
-      pid_gains:
-        front_left_coxa_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        front_right_coxa_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        rear_right_coxa_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        rear_left_coxa_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        front_left_femur_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        front_right_femur_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        rear_right_femur_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        rear_left_femur_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        front_left_tibia_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        front_right_tibia_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        rear_right_tibia_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
-        rear_left_tibia_joint:
-          p: 2.0
-          i: 0.0
-          d: 0.001
+    # gazebo_ros_control:
+    #   pid_gains:
+    #     front_left_coxa_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     front_right_coxa_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     rear_right_coxa_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     rear_left_coxa_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     front_left_femur_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     front_right_femur_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     rear_right_femur_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     rear_left_femur_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     front_left_tibia_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     front_right_tibia_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     rear_right_tibia_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
+    #     rear_left_tibia_joint:
+    #       p: 2.0
+    #       i: 0.0
+    #       d: 0.001
 
     joint_state_controller:
         type: joint_state_controller/JointStateController

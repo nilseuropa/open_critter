@@ -37,12 +37,15 @@ int main(int argc, char** argv){
 
   ros::Rate r(publish_rate);
   double x = 0;
+  bool state = true;
 
   while(n.ok()){
     ros::spinOnce();
     std_msgs::Float64 msg;
 
-    x += 90; if (x>90)x=0;
+    if (state) x = 30; else x = 90;
+    state = !state;
+
     msg.data = map(x, 0, 180, -1.7, 0.7);
     FLCp.publish(msg);
     msg.data = map(x, 0, 180, -2.0, 0.7);
@@ -71,7 +74,7 @@ int main(int argc, char** argv){
     msg.data = map(x, 0, 180, -0.5, 1.0);
     RLTp.publish(msg);
 
-    ros::Duration(1.0).sleep();
+    ros::Duration(2.0).sleep();
     //r.sleep();
   }
 }
