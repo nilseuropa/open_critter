@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
+#include <std_msgs/Float32.h>
 
 double map(double x, double in_min, double in_max, double out_min, double out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -18,22 +18,22 @@ int main(int argc, char** argv){
   nhLocal.param("namespace", ns, std::string("open_critter"));
 
   // Coxae
-  ros::Publisher FRCp = n.advertise<std_msgs::Float64>(ns+"/"+"front_right_coxa"+cs, 1);
-  ros::Publisher FLCp = n.advertise<std_msgs::Float64>(ns+"/"+"front_left_coxa" +cs, 1);
-  ros::Publisher RRCp = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_coxa" +cs, 1);
-  ros::Publisher RLCp = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_coxa"  +cs, 1);
+  ros::Publisher FRCp = n.advertise<std_msgs::Float32>(ns+"/"+"front_right_coxa"+cs, 1);
+  ros::Publisher FLCp = n.advertise<std_msgs::Float32>(ns+"/"+"front_left_coxa" +cs, 1);
+  ros::Publisher RRCp = n.advertise<std_msgs::Float32>(ns+"/"+"rear_right_coxa" +cs, 1);
+  ros::Publisher RLCp = n.advertise<std_msgs::Float32>(ns+"/"+"rear_left_coxa"  +cs, 1);
 
   // Femurae
-  ros::Publisher FRFp = n.advertise<std_msgs::Float64>(ns+"/"+"front_right_femur"+cs, 1);
-  ros::Publisher FLFp = n.advertise<std_msgs::Float64>(ns+"/"+"front_left_femur" +cs, 1);
-  ros::Publisher RRFp = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_femur" +cs, 1);
-  ros::Publisher RLFp = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_femur"  +cs, 1);
+  ros::Publisher FRFp = n.advertise<std_msgs::Float32>(ns+"/"+"front_right_femur"+cs, 1);
+  ros::Publisher FLFp = n.advertise<std_msgs::Float32>(ns+"/"+"front_left_femur" +cs, 1);
+  ros::Publisher RRFp = n.advertise<std_msgs::Float32>(ns+"/"+"rear_right_femur" +cs, 1);
+  ros::Publisher RLFp = n.advertise<std_msgs::Float32>(ns+"/"+"rear_left_femur"  +cs, 1);
 
   // Tibiae
-  ros::Publisher FRTp = n.advertise<std_msgs::Float64>(ns+"/"+"front_right_tibia"+cs, 1);
-  ros::Publisher FLTp = n.advertise<std_msgs::Float64>(ns+"/"+"front_left_tibia" +cs, 1);
-  ros::Publisher RRTp = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_tibia" +cs, 1);
-  ros::Publisher RLTp = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_tibia"  +cs, 1);
+  ros::Publisher FRTp = n.advertise<std_msgs::Float32>(ns+"/"+"front_right_tibia"+cs, 1);
+  ros::Publisher FLTp = n.advertise<std_msgs::Float32>(ns+"/"+"front_left_tibia" +cs, 1);
+  ros::Publisher RRTp = n.advertise<std_msgs::Float32>(ns+"/"+"rear_right_tibia" +cs, 1);
+  ros::Publisher RLTp = n.advertise<std_msgs::Float32>(ns+"/"+"rear_left_tibia"  +cs, 1);
 
   ros::Rate r(publish_rate);
   double x = 0;
@@ -41,11 +41,10 @@ int main(int argc, char** argv){
 
   while(n.ok()){
     ros::spinOnce();
-    std_msgs::Float64 msg;
+    std_msgs::Float32 msg;
 
-    if (state) x = 30; else x = 90;
     state = !state;
-
+    if (state) x = 30; else x = 90;
     msg.data = map(x, 0, 180, -1.7, 0.7);
     FLCp.publish(msg);
     msg.data = map(x, 0, 180, -2.0, 0.7);

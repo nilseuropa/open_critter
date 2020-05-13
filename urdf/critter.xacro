@@ -59,8 +59,15 @@
         <box_inertia m="0.2" x="0.1" y="0.05" z="0.03" />
     </inertial>
   </link>
+  <!-- <gazebo reference="base_link">
+    <selfCollide>True</selfCollide>
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+  </gazebo> -->
 
-  <xacro:property name="rubber_paw" value="true"/>
+  <xacro:property name="rubber_paw" value="false"/>
 
   <xacro:leg name="front_left" odd="true" paw="${rubber_paw}" parent_link="base_link">
     <origin xyz="0.03 0.035 0.0225" rpy="0 0 ${pi}"/>
@@ -78,10 +85,10 @@
     <origin xyz="0.03 -0.035 0.0225" rpy="0 0 ${pi}"/>
   </xacro:leg>
 
-  <gazebo>
+  <!-- <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
           <robotNamespace>/open_critter</robotNamespace>
       </plugin>
-  </gazebo>
+  </gazebo> -->
 
 </robot>
