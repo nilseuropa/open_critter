@@ -6,7 +6,12 @@
   <maintainer email="marton@neorobot.hu">nils</maintainer>
   <license>NO</license>
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
   <exec_depend>ros_control</exec_depend>
   <exec_depend>ros_controllers</exec_depend>
   <exec_depend>gazebo_plugins</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
 </package>

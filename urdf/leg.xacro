@@ -5,6 +5,11 @@
 
 <xacro:macro name="leg" params="name odd parent_link *origin">
 
+  <xacro:property name="servo_effort"    value="10"/>
+  <xacro:property name="servo_velocity"  value="10"/>
+  <xacro:property name="servo_torque"    value="2"/>
+  <xacro:property name="servo_reduction" value="1"/>
+
   <xacro:if value="${odd}">
     <xacro:property name="coxa_model"  value="package://open_critter/meshes/collada/coxa_front.dae"/>
     <xacro:property name="tibia_model" value="package://open_critter/meshes/collada/tibia_rear.dae"/>
@@ -61,9 +66,8 @@
     <parent link="${name}_coxa_servo"/>
     <child link="${name}_coxa_link"/>
     <origin rpy="0 0 ${yaw}" xyz="-0.005 0 -0.002"/>
-    <limit effort="100" velocity="2.0" lower="${coxa_lower}" upper="${coxa_upper}"/>
+    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="${coxa_lower}" upper="${coxa_upper}"/>
     <axis xyz="0 0 1"/>
-    <!--dynamics damping="0.5" friction="0.0"/-->
   </joint>
   <transmission name="${name}_coxa_transmission">
       <type>transmission_interface/SimpleTransmission</type>
@@ -72,8 +76,8 @@
       </joint>
       <actuator name="${name}_coxa_actuator">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-          <mechanicalReduction>1</mechanicalReduction>
-          <motorTorqueConstant>10</motorTorqueConstant>
+          <mechanicalReduction>${servo_reduction}</mechanicalReduction>
+          <motorTorqueConstant>${servo_torque}</motorTorqueConstant>
       </actuator>
   </transmission>
 
@@ -133,9 +137,8 @@
     <parent link="${name}_femur_servo"/>
     <child link="${name}_femur_link"/>
     <origin rpy="0 0 0" xyz="${servo_x} 0 0.005"/>
-    <limit effort="100" velocity="2.0" lower="-2.0" upper="0.7"/>
+    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-2.0" upper="0.7"/>
     <axis xyz="1 0 0"/>
-    <!--dynamics damping="0.5" friction="0.0"/-->
   </joint>
   <transmission name="${name}_femur_transmission">
       <type>transmission_interface/SimpleTransmission</type>
@@ -144,8 +147,8 @@
       </joint>
       <actuator name="${name}_femur_actuator">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-          <mechanicalReduction>1</mechanicalReduction>
-          <motorTorqueConstant>10</motorTorqueConstant>
+          <mechanicalReduction>${servo_reduction}</mechanicalReduction>
+          <motorTorqueConstant>${servo_torque}</motorTorqueConstant>
       </actuator>
   </transmission>
 
@@ -176,9 +179,8 @@
     <parent link="${name}_femur_link"/>
     <child link="${name}_tibia_servo"/>
     <origin rpy="0 0 0" xyz="0 -0.055 0"/>
-    <limit effort="100" velocity="2.0" lower="-4.0" upper="1.0"/>
+    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-4.0" upper="1.0"/>
     <axis xyz="1 0 0"/>
-    <!--dynamics damping="0.5" friction="0.0"/-->
   </joint>
   <transmission name="${name}_tibia_transmission">
       <type>transmission_interface/SimpleTransmission</type>
@@ -187,8 +189,8 @@
       </joint>
       <actuator name="${name}_tibia_actuator">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-          <mechanicalReduction>1</mechanicalReduction>
-          <motorTorqueConstant>10</motorTorqueConstant>
+          <mechanicalReduction>${servo_reduction}</mechanicalReduction>
+          <motorTorqueConstant>${servo_torque}</motorTorqueConstant>
       </actuator>
   </transmission>
 
@@ -243,9 +245,7 @@
         <box_inertia m="0.001" x="0.1" y="0.005" z="0.005" />
     </inertial>
   </link>
-
-  <!-- Rubber surface -->
-  <gazebo reference="${name}_tibia_link">
+  <!-- <gazebo reference="${name}_tibia_link">
     <mu1 value="1.0"/>
     <mu2 value="1.0"/>
     <kp value="100000.0" />
@@ -253,7 +253,7 @@
     <fdir1 value="0 1 0"/>
     <turnGravityOff>false</turnGravityOff>
     <selfCollide>true</selfCollide>
-  </gazebo>
+  </gazebo> -->
 
 </xacro:macro>
 
