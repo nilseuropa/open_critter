@@ -7,14 +7,15 @@
   <xacro:property name="servo_velocity"  value="4.0"/>
   <xacro:property name="servo_torque"    value="10"/>
   <xacro:property name="servo_reduction" value="1.0"/>
+  <xacro:property name="coxa_lower" value="-1.0"/>
+  <xacro:property name="coxa_upper" value="1.0"/>
 
   <xacro:if value="${odd}">
     <xacro:property name="coxa_model"  value="package://open_critter/meshes/collada/coxa_front.dae"/>
     <xacro:property name="tibia_model" value="package://open_critter/meshes/collada/tibia_rear.dae"/>
     <xacro:property name="yaw" value="0"/>
+    <xacro:property name="cyaw" value="${-pi/4}"/>
     <xacro:property name="nyaw" value="${pi}"/>
-    <xacro:property name="coxa_upper" value="0.7"/>
-    <xacro:property name="coxa_lower" value="-1.7"/>
     <xacro:property name="side" value="1.0"/>
     <xacro:property name="servo_x" value="0"/>
     <xacro:property name="tibia_x" value="0.0075"/>
@@ -25,9 +26,8 @@
     <xacro:property name="coxa_model" value="package://open_critter/meshes/collada/coxa_rear.dae"/>
     <xacro:property name="tibia_model" value="package://open_critter/meshes/collada/tibia_front.dae"/>
     <xacro:property name="yaw" value="${pi}"/>
+    <xacro:property name="cyaw" value="${pi+pi/4}"/>
     <xacro:property name="nyaw" value="0"/>
-    <xacro:property name="coxa_upper" value="1.7"/>
-    <xacro:property name="coxa_lower" value="-0.7"/>
     <xacro:property name="side" value="-1.0"/>
     <xacro:property name="servo_x" value="-0.005"/>
     <xacro:property name="tibia_x" value="-0.0025"/>
@@ -67,7 +67,7 @@
   <joint name="${name}_coxa_joint" type="revolute">
     <parent link="${name}_coxa_servo"/>
     <child link="${name}_coxa_link"/>
-    <origin rpy="0 0 ${yaw}" xyz="-0.005 0 -0.002"/>
+    <origin rpy="0 0 ${cyaw}" xyz="-0.005 0 -0.002"/>
     <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="${coxa_lower}" upper="${coxa_upper}"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -301,13 +301,13 @@
     <gazebo reference="${name}_paw_link">
       <gravity>true</gravity>
       <selfCollide>true</selfCollide>
-      <mu1>5.0</mu1>
-      <mu2>0.5</mu2>
-      <kp>10000000.0</kp>
+      <mu1>0.1</mu1>
+      <mu2>0.1</mu2>
+      <kp>1000000.0</kp>
       <kd>1.0</kd>
       <fdir1>0 1 0</fdir1>
       <maxContacts>1</maxContacts>
-      <minDepth>0.001</minDepth>
+      <minDepth>0.0001</minDepth>
       <collision name="${name}__paw_link_collision">
         <geometry>
             <sphere>

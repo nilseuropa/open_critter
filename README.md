@@ -40,5 +40,4 @@ Start the simulation with: `roslaunch open_critter simulation.launch`
 ![](doc/sim.gif)
 
 #### Known issues ####
-* Model slides on it's own. Friction parameters has to be set correctly.
 * PID gains for _PositionJointInterfaces_ are not yet tuned. _(off)_
