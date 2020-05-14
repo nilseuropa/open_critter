@@ -7,6 +7,7 @@
   <xacro:property name="servo_velocity"  value="4.0"/>
   <xacro:property name="servo_torque"    value="10"/>
   <xacro:property name="servo_reduction" value="1.0"/>
+
   <xacro:property name="coxa_lower" value="-1.0"/>
   <xacro:property name="coxa_upper" value="1.0"/>
 
@@ -142,8 +143,8 @@
   <joint name="${name}_femur_joint" type="revolute">
     <parent link="${name}_femur_servo"/>
     <child link="${name}_femur_link"/>
-    <origin rpy="0 0 0" xyz="${servo_x} 0 0.005"/>
-    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-2.0" upper="0.7"/>
+    <origin rpy="${-pi/8} 0 0" xyz="${servo_x} 0 0.005"/>
+    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-1.0" upper="1.0"/>
     <axis xyz="1 0 0"/>
   </joint>
   <transmission name="${name}_femur_transmission">
@@ -188,8 +189,8 @@
   <joint name="${name}_tibia_joint" type="revolute">
     <parent link="${name}_femur_link"/>
     <child link="${name}_tibia_servo"/>
-    <origin rpy="0 0 0" xyz="0 -0.055 0"/>
-    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-4.0" upper="1.0"/>
+    <origin rpy="${-pi/8} 0 0" xyz="0 -0.055 0"/>
+    <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-1.0" upper="1.0"/>
     <axis xyz="1 0 0"/>
     <dynamics friction="0.7"/>
   </joint>
@@ -261,7 +262,7 @@
     <mu2 value="0.5"/>
     <kp value="10000000.0" />
     <kd value="1.0" />
-    <fdir1 value="1 0 0"/> <!-- sideways friction, hopefully -->
+    <fdir1 value="1 0 0"/>
     <turnGravityOff>false</turnGravityOff>
     <selfCollide>true</selfCollide>
   </gazebo>

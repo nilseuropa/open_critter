@@ -35,46 +35,36 @@ int main(int argc, char** argv){
   ros::Publisher RR_TIB_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_tibia" +cs, 1);
   ros::Publisher RL_TIB_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_tibia"  +cs, 1);
 
-  ros::Rate r(publish_rate);
+  // ros::Rate r(publish_rate);
   double x = 0;
   bool state = true;
 
   while(n.ok()){
     ros::spinOnce();
+
     std_msgs::Float64 msg;
-
-    if (state) x = 30; else x = 90;
+    if (state) x = 0; else x = 0.5;
     state = !state;
+    msg.data = x;
 
-    msg.data = map(x, 0, 180, -1.0, 1.0);
     FL_COX_pub.publish(msg);
-    msg.data = map(x, 0, 180, -2.0, 0.7);
     FL_FEM_pub.publish(msg);
-    msg.data = map(x, 0, 180, -0.5, 1.0);
     FL_TIB_pub.publish(msg);
 
-    msg.data = map(x, 0, 180, -1.0, 1.0);
     FR_COX_pub.publish(msg);
-    msg.data = map(x, 0, 180, -2.0, 0.7);
     FR_FEM_pub.publish(msg);
-    msg.data = map(x, 0, 180, -0.5, 1.0);
     FR_TIB_pub.publish(msg);
 
-    msg.data = map(x, 0, 180, -1.0, 1.0);
     RR_COX_pub.publish(msg);
-    msg.data = map(x, 0, 180, -2.0, 0.7);
     RR_FEM_pub.publish(msg);
-    msg.data = map(x, 0, 180, -0.5, 1.0);
     RR_TIB_pub.publish(msg);
 
-    msg.data = map(x, 0, 180, -1.0, 1.0);
     RL_COX_pub.publish(msg);
-    msg.data = map(x, 0, 180, -2.0, 0.7);
     RL_FEM_pub.publish(msg);
-    msg.data = map(x, 0, 180, -0.5, 1.0);
     RL_TIB_pub.publish(msg);
 
     ros::Duration(1.0).sleep();
+
     //r.sleep();
   }
 }
