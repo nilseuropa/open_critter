@@ -30,13 +30,19 @@ enum jointOrder {
 
 typedef struct {
   uint8_t  packetId;
-	float    angles[16];
+} __PACKED Header;
+
+typedef struct {
+  Header   header;
+	double   states[16];
 } __PACKED RobotStatePacket;
 
 typedef struct {
-  uint8_t  packetId;
+  Header   header;
   uint8_t  jointId;
-	float    angle;
+  uint8_t  jointIdd;
+  uint8_t  jointIdf;
+	double   state;
 } __PACKED ServoStatePacket;
 
 #endif
