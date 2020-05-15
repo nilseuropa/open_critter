@@ -1,5 +1,7 @@
 # Open Critter #
 
+3D printable ROS enabled quadruped robot.
+
 ![](doc/critter.gif)
 
 ## Assembly ##
@@ -7,6 +9,9 @@
 * Print the `stl` files from `meshes` directory.
 * Use the screws provided for the servos and shields.
 * No soldering required. _(yet)_
+
+### Servo to shield pin mapping ###
+![](doc/servo_map.png)
 
 ### Components ###
 * Raspberry Pi Zero _( or ZeroW )_
