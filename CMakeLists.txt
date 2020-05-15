@@ -15,12 +15,17 @@ catkin_package()
 ###########
 
 include_directories(
-  # "include"
+  "include"
   ${catkin_INCLUDE_DIRS}
 )
 
 add_executable(gait_controller src/gait_controller.cpp)
 target_link_libraries(gait_controller
+  ${catkin_LIBRARIES}
+)
+
+add_executable(robot_bridge src/robot_bridge.cpp)
+target_link_libraries(robot_bridge
   ${catkin_LIBRARIES}
 )
 
