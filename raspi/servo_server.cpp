@@ -1,5 +1,4 @@
 #include <PCA9685.h>
-#include <protocol.h>
 #include <iostream>
 #include <stdio.h>
 #include <thread>
@@ -13,6 +12,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <open_critter/protocol.h>
 
 #define MIN_PULSE_WIDTH 900
 #define MAX_PULSE_WIDTH 2100
@@ -26,17 +26,17 @@ void error(char const *msg) {
   exit(1);
 }
 
-int map (int x, int in_min, int in_max, int out_min, int out_max) {
-    return ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-}
+double map(double x, double in_min, double in_max, double out_min, double out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+};
 
-int set_joint(PCA9685 pwm, int channel, int angle ) {
-    if (angle > 180) { angle = 180; }
-    if (angle < 0) { angle = 0; }
-    float pulse_wide = map(angle,0,180,MIN_PULSE_WIDTH,MAX_PULSE_WIDTH);
-    int analog_value = int(float(pulse_wide) /  1000000 * FREQUENCY * 4096);
+int set_joint(PCA9685 pwm, int channel, double state ) {
+    if ( state > 1.0 )  state = 1.0;
+    if ( state < -1.0 ) state = -1.0;
+    double pulse_width = map(state,-1.0,1.0,MIN_PULSE_WIDTH,MAX_PULSE_WIDTH);
+    int analog_value = int(pulse_width /  1000000 * FREQUENCY * 4096);
     pwm.setPWM(channel, 0, analog_value);
-    cout << "Joint: " << channel << "\tAngle: " << angle << "\tAnalog: " << analog_value << endl;
+    cout << "Joint: " << channel << "\tState: " << state << "\tAnalog: " << analog_value << endl;
     return(0);
 }
 
@@ -100,10 +100,11 @@ int main(int argc, char **argv) {
     switch (message_buffer[PID]){
       case PID_SET_SERVO:
         memcpy(&singleJoint, &message_buffer, sizeof(ServoStatePacket));
-        set_joint(pwm, singleJoint.jointId-1, singleJoint.angle);
+        set_joint(pwm, singleJoint.jointId, singleJoint.state);
       break;
       case PID_SET_ALL_SERVOS:
         memcpy(&allJoints, &message_buffer, sizeof(RobotStatePacket));
+        // TODO
       break;
     }
 
