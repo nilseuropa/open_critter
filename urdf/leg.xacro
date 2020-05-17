@@ -145,7 +145,7 @@
     <child link="${name}_femur_link"/>
     <origin rpy="${-pi/8} 0 0" xyz="${servo_x} 0 0.005"/>
     <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-1.0" upper="1.0"/>
-    <axis xyz="1 0 0"/>
+    <axis xyz="${-1*side} 0 0"/>
   </joint>
   <transmission name="${name}_femur_transmission">
       <type>transmission_interface/SimpleTransmission</type>
@@ -191,7 +191,7 @@
     <child link="${name}_tibia_servo"/>
     <origin rpy="${-pi/8} 0 0" xyz="0 -0.055 0"/>
     <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-1.0" upper="1.0"/>
-    <axis xyz="1 0 0"/>
+    <axis xyz="${side} 0 0"/>
     <dynamics friction="0.7"/>
   </joint>
   <transmission name="${name}_tibia_transmission">
