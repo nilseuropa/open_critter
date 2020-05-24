@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="load_world" default="true"/>
+  <arg name="load_world" default="false"/>
   <arg name="gazebo_gui" default="true"/>
 
   <!-- model setup -->

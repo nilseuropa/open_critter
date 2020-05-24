@@ -61,7 +61,7 @@
         <box size="0.02 0.01 0.03"/>
       </geometry>
         <mass value="0.009"/>
-        <box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+        <xacro:box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
     </inertial>
   </link>
 
@@ -103,7 +103,7 @@
         <box size="0.04 0.01 0.03"/>
       </geometry>
         <mass value="0.001"/>
-        <box_inertia m="0.001" x="0.04" y="0.01" z="0.03" />
+        <xacro:box_inertia m="0.001" x="0.04" y="0.01" z="0.03" />
     </inertial>
   </link>
   <gazebo reference="${name}_coxa_link">
@@ -136,7 +136,7 @@
         <box size="0.02 0.01 0.03"/>
       </geometry>
         <mass value="0.009"/>
-        <box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+        <xacro:box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
     </inertial>
   </link>
 
@@ -178,7 +178,7 @@
         <box size="0.05 0.01 0.03"/>
       </geometry>
         <mass value="0.002"/>
-        <box_inertia m="0.002" x="0.05" y="0.01" z="0.03" />
+        <xacro:box_inertia m="0.002" x="0.05" y="0.01" z="0.03" />
     </inertial>
   </link>
   <gazebo reference="${name}_femur_link">
@@ -225,7 +225,7 @@
         <box size="0.02 0.01 0.03"/>
       </geometry>
         <mass value="0.009"/>
-        <box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+        <xacro:box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
     </inertial>
   </link>
 
@@ -254,7 +254,7 @@
         <box size="0.1 0.005 0.005"/>
       </geometry>
         <mass value="0.001"/>
-        <box_inertia m="0.001" x="0.1" y="0.005" z="0.005" />
+        <xacro:box_inertia m="0.001" x="0.1" y="0.005" z="0.005" />
     </inertial>
   </link>
   <gazebo reference="${name}_tibia_link">
@@ -295,7 +295,7 @@
           <sphere radius="0.005"/>
         </geometry>
           <mass value="0.001"/>
-          <sphere_inertia m="0.001" r="0.005"/>
+          <xacro:sphere_inertia m="0.001" r="0.005"/>
       </inertial>
     </link>
 
