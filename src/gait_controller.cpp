@@ -1,70 +1,117 @@
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
+#include <open_critter/protocol.h>
 
-double map(double x, double in_min, double in_max, double out_min, double out_max) {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+std::vector<ros::Publisher> joint_publishers;
+
+std_msgs::Float64 msg[12];
+
+std::string topics[12] = {
+  "front_left_coxa",  "front_left_femur",   "front_left_tibia",
+  "front_right_coxa", "front_right_femur",  "front_right_tibia",
+  "rear_right_coxa",  "rear_right_femur",   "rear_right_tibia",
+  "rear_left_coxa",   "rear_left_femur",    "rear_left_tibia"
 };
 
-int main(int argc, char** argv){
+float up    = -0.5;
+float down  =  0.5;
+float reach = -0.5;
+float push  =  0.5;
+float mid   =  0.0;
+
+float state[12] = {
+// C     F     T
+   0.0,  0.0,  0.0, // FL
+   0.0,  0.0,  0.0, // FR
+   0.0,  0.0,  0.0, // RR
+   0.0,  0.0,  0.0  // RL
+};
+
+float sequence[4][12] = {
+   {
+      reach,  up,  up,
+      reach,  up,  up,
+      reach,  up,  up,
+      reach,  up,  up
+   },
+   {
+      reach,  down,  down,
+      reach,  down,  down,
+      reach,  down,  down,
+      reach,  down,  down
+   },
+   {
+      push,  down,  down,
+      push,  down,  down,
+      push,  down,  down,
+      push,  down,  down
+   },
+   {
+      push,  up,  up,
+      push,  up,  up,
+      push,  up,  up,
+      push,  up,  up
+   }
+};
+
+void publish_joint_states(float stm[])
+{
+  for (uint8_t i=0; i<12; i++) {
+         // hardware inverted joints
+         if (i==FL_Femur) msg[i].data=-stm[i];
+    else if (i==FR_Tibia) msg[i].data=-stm[i];
+    else if (i==RR_Femur) msg[i].data=-stm[i];
+    else if (i==RL_Tibia) msg[i].data=-stm[i];
+    // inverse operation
+    else if (i==FR_Coxa) msg[i].data=-stm[i];
+    else if (i==RR_Coxa) msg[i].data=-stm[i];
+    //
+    else msg[i].data = stm[i];
+    joint_publishers[i].publish(msg[i]);
+  }
+}
+
+void initialize_joints()
+{
+  for (uint8_t i=0; i<12; i++) state[i] = 0.0;
+}
+
+int main(int argc, char** argv)
+{
   ros::init(argc, argv, "gait_controller");
   ros::NodeHandle n;
   ros::NodeHandle nhLocal("~");
 
+  std::string robot_name;
+  std::string cmd_str = "/command";
   double publish_rate;
-  std::string ns;
-  std::string cs = "/command";
 
-  nhLocal.param("publish_rate", publish_rate, 10.0);
-  nhLocal.param("namespace", ns, std::string("open_critter"));
+  nhLocal.param("namespace", robot_name, std::string("open_critter"));
+  nhLocal.param("publish_rate", publish_rate, 1.0);
 
-  // Coxae
-  ros::Publisher FR_COX_pub = n.advertise<std_msgs::Float64>(ns+"/"+"front_right_coxa"+cs, 1);
-  ros::Publisher FL_COX_pub = n.advertise<std_msgs::Float64>(ns+"/"+"front_left_coxa" +cs, 1);
-  ros::Publisher RR_COX_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_coxa" +cs, 1);
-  ros::Publisher RL_COX_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_coxa"  +cs, 1);
+  for (uint8_t i=0; i<12; i++) {
+    std::stringstream ss;
+    ss << robot_name << "/" << topics[i] << cmd_str;
+    joint_publishers.push_back( n.advertise<std_msgs::Float64>(ss.str(), 50));
+  }
 
-  // Femurae
-  ros::Publisher FR_FEM_pub = n.advertise<std_msgs::Float64>(ns+"/"+"front_right_femur"+cs, 1);
-  ros::Publisher FL_FEM_pub = n.advertise<std_msgs::Float64>(ns+"/"+"front_left_femur" +cs, 1);
-  ros::Publisher RR_FEM_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_femur" +cs, 1);
-  ros::Publisher RL_FEM_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_femur"  +cs, 1);
+  bool initialized = false;
+  while(n.ok()&&!initialized){
+    ros::spinOnce();
+    initialize_joints();
+    publish_joint_states(state);
+    ros::Duration(1.0).sleep();
+    initialized = true;
+  }
+  ROS_INFO("Joint states initialized.");
+  ros::Rate r(publish_rate);
 
-  // Tibiae
-  ros::Publisher FR_TIB_pub = n.advertise<std_msgs::Float64>(ns+"/"+"front_right_tibia"+cs, 1);
-  ros::Publisher FL_TIB_pub = n.advertise<std_msgs::Float64>(ns+"/"+"front_left_tibia" +cs, 1);
-  ros::Publisher RR_TIB_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_right_tibia" +cs, 1);
-  ros::Publisher RL_TIB_pub = n.advertise<std_msgs::Float64>(ns+"/"+"rear_left_tibia"  +cs, 1);
-
-  // ros::Rate r(publish_rate);
-  double x = 0;
-  bool state = true;
+  uint8_t sq=0;
 
   while(n.ok()){
     ros::spinOnce();
-
-    std_msgs::Float64 msg;
-    if (state) x = 0; else x = 0.5;
-    state = !state;
-    msg.data = x;
-
-    FL_COX_pub.publish(msg);
-    FL_FEM_pub.publish(msg);
-    FL_TIB_pub.publish(msg);
-
-    FR_COX_pub.publish(msg);
-    FR_FEM_pub.publish(msg);
-    FR_TIB_pub.publish(msg);
-
-    RR_COX_pub.publish(msg);
-    RR_FEM_pub.publish(msg);
-    RR_TIB_pub.publish(msg);
-
-    RL_COX_pub.publish(msg);
-    RL_FEM_pub.publish(msg);
-    RL_TIB_pub.publish(msg);
-
-    ros::Duration(1.0).sleep();
-
-    //r.sleep();
+    publish_joint_states(sequence[sq]);
+    sq++; sq>3?sq=0:sq;
+    r.sleep();
   }
 }
