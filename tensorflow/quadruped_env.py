@@ -131,14 +131,15 @@ class QuadrupedEnvironment:
         self.last_pos = np.zeros(3)
         self.last_ori = np.zeros(4)
 
-        self.joint_pos_low = np.array([1.0, 1.0, 1.0,
-                                        1.0, 1.0, 1.0,
-                                        1.0, 1.0, 1.0,
-                                        1.0, 1.0, 1.0])
-        self.joint_pos_high = np.array([ -1.0, -1.0, -1.0,
-                                        -1.0, -1.0, -1.0,
-                                        -1.0, -1.0, -1.0,
-                                        -1.0, -1.0, -1.0])
+        self.joint_pos_low = np.array([0.5, 0.5, -0.5,
+                                        -0.5, 0.5, 0.5,
+                                        0.5, -0.5, 0.5,
+                                        0.5, 0.5, -0.5])
+        self.joint_pos_high = np.array([ -0.5, -0.5, 0.5,
+                                         0.5, -0.5, -0.5,
+                                        -0.5, 0.5, -0.5,
+                                        -0.5, -0.5, 0.5])
+
         self.joint_pos_coeff = 3.0
         self.joint_pos_range = self.joint_pos_high - self.joint_pos_low
         self.joint_pos_mid = (self.joint_pos_high + self.joint_pos_low) / 2.0

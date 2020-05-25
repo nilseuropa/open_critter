@@ -7,8 +7,8 @@
 
   <xacro:property name="servo_effort"    value="1.0"/>
   <xacro:property name="servo_velocity"  value="4.0"/>
-  <xacro:property name="servo_torque"    value="0.5"/>
-  <xacro:property name="servo_reduction" value="10.0"/>
+  <xacro:property name="servo_torque"    value="1.0"/>
+  <xacro:property name="servo_reduction" value="1.0"/>
 
   <xacro:property name="coxa_lower" value="-1.0"/>
   <xacro:property name="coxa_upper" value="1.0"/>
@@ -62,8 +62,8 @@
       <geometry>
         <box size="0.02 0.01 0.03"/>
       </geometry>
-        <mass value="0.009"/>
-        <xacro:box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+        <mass value="0.1"/>
+        <xacro:box_inertia m="0.1" x="0.02" y="0.01" z="0.03" />
     </inertial>
   </link>
 
@@ -106,8 +106,8 @@
       <geometry>
         <box size="0.04 0.01 0.03"/>
       </geometry>
-        <mass value="0.001"/>
-        <xacro:box_inertia m="0.001" x="0.04" y="0.01" z="0.03" />
+        <mass value="0.1"/>
+        <xacro:box_inertia m="0.1" x="0.04" y="0.01" z="0.03" />
     </inertial>
   </link>
   <gazebo reference="${name}_coxa_link">
@@ -139,8 +139,8 @@
       <geometry>
         <box size="0.02 0.01 0.03"/>
       </geometry>
-        <mass value="0.009"/>
-        <xacro:box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+        <mass value="0.1"/>
+        <xacro:box_inertia m="0.1" x="0.02" y="0.01" z="0.03" />
     </inertial>
   </link>
 
@@ -183,8 +183,8 @@
       <geometry>
         <box size="0.05 0.01 0.03"/>
       </geometry>
-        <mass value="0.002"/>
-        <xacro:box_inertia m="0.002" x="0.05" y="0.01" z="0.03" />
+        <mass value="0.2"/>
+        <xacro:box_inertia m="0.2" x="0.05" y="0.01" z="0.03" />
     </inertial>
   </link>
   <gazebo reference="${name}_femur_link">
@@ -198,7 +198,7 @@
     <origin rpy="${-pi/8} 0 0" xyz="0 -0.055 0"/>
     <limit effort="${servo_effort}" velocity="${servo_velocity}" lower="-1.0" upper="1.0"/>
     <axis xyz="${side} 0 0"/>
-    <dynamics friction="0.7"/>
+    <!-- <dynamics friction="0.7"/> -->
   </joint>
   <transmission name="${name}_tibia_transmission">
       <type>transmission_interface/SimpleTransmission</type>
@@ -232,8 +232,8 @@
       <geometry>
         <box size="0.02 0.01 0.03"/>
       </geometry>
-        <mass value="0.009"/>
-        <xacro:box_inertia m="0.009" x="0.02" y="0.01" z="0.03" />
+        <mass value="0.1"/>
+        <xacro:box_inertia m="0.1" x="0.02" y="0.01" z="0.03" />
     </inertial>
   </link>
 
@@ -261,8 +261,8 @@
       <geometry>
         <box size="0.1 0.005 0.005"/>
       </geometry>
-        <mass value="0.001"/>
-        <xacro:box_inertia m="0.001" x="0.1" y="0.005" z="0.005" />
+        <mass value="0.1"/>
+        <xacro:box_inertia m="0.1" x="0.1" y="0.005" z="0.005" />
     </inertial>
   </link>
   <gazebo reference="${name}_tibia_link">
@@ -302,20 +302,20 @@
         <geometry>
           <sphere radius="0.005"/>
         </geometry>
-          <mass value="0.001"/>
-          <xacro:sphere_inertia m="0.001" r="0.005"/>
+          <mass value="0.1"/>
+          <xacro:sphere_inertia m="0.1" r="0.005"/>
       </inertial>
     </link>
 
     <gazebo reference="${name}_paw_link">
-      <!-- <gravity>true</gravity>
+      <gravity>true</gravity>
       <selfCollide>true</selfCollide>
       <mu1>100.0</mu1>
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
       <fdir1>1 0 0</fdir1>
-      <maxContacts>1</maxContacts> -->
+      <maxContacts>1</maxContacts>
       <minDepth>0.0002</minDepth>
       <collision name="${name}__paw_link_collision">
         <geometry>
@@ -325,32 +325,18 @@
         </geometry>
         <surface>
           <friction>
-            <ode>
-              <mu>100000.0</mu>
-              <mu2>100000.0</mu2>
-            </ode>
             <torsional>
-              <coefficient>1000000</coefficient>
-              <use_patch_radius>true</use_patch_radius>
-              <surface_radius>0.005</surface_radius>
-              <patch_radius>0.005</patch_radius>
-            </torsional>
-          </friction>
-        </surface>
-        <!-- <surface>
-          <friction>
-            <torsional>
-                <coefficient>10</coefficient>
+                <coefficient>1000000</coefficient>
                 <use_patch_radius>true</use_patch_radius>
-                <surface_radius>0.1</surface_radius>
-                <patch_radius>0.1</patch_radius>
+                <surface_radius>0.005</surface_radius>
+                <patch_radius>0.005</patch_radius>
             </torsional>
           </friction>
           <contact>
             <poissons_ratio>0.01</poissons_ratio>
             <elastic_modulus>1e8</elastic_modulus>
           </contact>
-        </surface> -->
+        </surface>
       </collision>
       <material>Gazebo/Red</material>
     </gazebo>

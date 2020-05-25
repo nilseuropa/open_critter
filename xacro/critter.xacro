@@ -63,8 +63,8 @@
       <geometry>
         <box size="0.1 0.05 0.03"/>
       </geometry>
-        <mass value="0.2"/>
-        <xacro:box_inertia m="0.2" x="0.1" y="0.05" z="0.03" />
+        <mass value="1.0"/>
+        <xacro:box_inertia m="1.0" x="0.1" y="0.05" z="0.03" />
     </inertial>
   </link>
 
