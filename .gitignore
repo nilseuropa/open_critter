@@ -2,3 +2,5 @@
 raspi/server
 
 raspi/test
+
+gym/pybulletgym/__pycache__/

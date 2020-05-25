@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+<xacro:include filename="$(find open_critter)/xacro/inertia.xacro"/>
+
 <xacro:macro name="leg" params="name odd parent_link paw *origin">
 
-  <xacro:property name="servo_effort"    value="10"/>
-  <xacro:property name="servo_velocity"  value="4.0"/>
-  <xacro:property name="servo_torque"    value="10"/>
-  <xacro:property name="servo_reduction" value="1.0"/>
+  <xacro:property name="servo_effort"    value="1.0"/>
+  <xacro:property name="servo_velocity"  value="1.0"/>
+  <xacro:property name="servo_torque"    value="0.5"/>
+  <xacro:property name="servo_reduction" value="10.0"/>
 
   <xacro:property name="coxa_lower" value="-1.0"/>
   <xacro:property name="coxa_upper" value="1.0"/>
@@ -302,8 +304,8 @@
     <gazebo reference="${name}_paw_link">
       <gravity>true</gravity>
       <selfCollide>true</selfCollide>
-      <mu1>0.1</mu1>
-      <mu2>0.1</mu2>
+      <mu1>100.0</mu1>
+      <mu2>50.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
       <fdir1>0 1 0</fdir1>
