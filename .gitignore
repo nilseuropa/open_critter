@@ -4,3 +4,5 @@ raspi/server
 raspi/test
 
 gym/pybulletgym/__pycache__/
+
+*.pyc
