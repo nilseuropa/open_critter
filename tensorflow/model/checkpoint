@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/nils/ros/src/quadruped/src/model/model.ckpt"
+all_model_checkpoint_paths: "/home/nils/ros/src/quadruped/src/model/model.ckpt"

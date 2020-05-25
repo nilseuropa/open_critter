@@ -77,10 +77,12 @@
   <transmission name="${name}_coxa_transmission">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${name}_coxa_joint">
-          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <!-- <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface> -->
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       </joint>
       <actuator name="${name}_coxa_actuator">
-          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+          <!-- <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface> -->
           <mechanicalReduction>${servo_reduction}</mechanicalReduction>
           <motorTorqueConstant>${servo_torque}</motorTorqueConstant>
       </actuator>
@@ -152,10 +154,12 @@
   <transmission name="${name}_femur_transmission">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${name}_femur_joint">
-          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <!-- <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface> -->
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       </joint>
       <actuator name="${name}_femur_actuator">
-          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <!-- <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface> -->
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
           <mechanicalReduction>${servo_reduction}</mechanicalReduction>
           <motorTorqueConstant>${servo_torque}</motorTorqueConstant>
       </actuator>
@@ -199,10 +203,12 @@
   <transmission name="${name}_tibia_transmission">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${name}_tibia_joint">
-          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <!-- <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface> -->
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       </joint>
       <actuator name="${name}_tibia_actuator">
-          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <!-- <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface> -->
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
           <mechanicalReduction>${servo_reduction}</mechanicalReduction>
           <motorTorqueConstant>${servo_torque}</motorTorqueConstant>
       </actuator>
@@ -302,15 +308,15 @@
     </link>
 
     <gazebo reference="${name}_paw_link">
-      <gravity>true</gravity>
+      <!-- <gravity>true</gravity>
       <selfCollide>true</selfCollide>
       <mu1>100.0</mu1>
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
       <fdir1>1 0 0</fdir1>
-      <maxContacts>1</maxContacts>
-      <minDepth>0.0001</minDepth>
+      <maxContacts>1</maxContacts> -->
+      <minDepth>0.0002</minDepth>
       <collision name="${name}__paw_link_collision">
         <geometry>
             <sphere>
@@ -318,6 +324,20 @@
         </sphere>
         </geometry>
         <surface>
+          <friction>
+            <ode>
+              <mu>100000.0</mu>
+              <mu2>100000.0</mu2>
+            </ode>
+            <torsional>
+              <coefficient>1000000</coefficient>
+              <use_patch_radius>true</use_patch_radius>
+              <surface_radius>0.005</surface_radius>
+              <patch_radius>0.005</patch_radius>
+            </torsional>
+          </friction>
+        </surface>
+        <!-- <surface>
           <friction>
             <torsional>
                 <coefficient>10</coefficient>
@@ -330,7 +350,7 @@
             <poissons_ratio>0.01</poissons_ratio>
             <elastic_modulus>1e8</elastic_modulus>
           </contact>
-        </surface>
+        </surface> -->
       </collision>
       <material>Gazebo/Red</material>
     </gazebo>
