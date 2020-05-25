@@ -6,7 +6,7 @@
 <xacro:macro name="leg" params="name odd parent_link paw *origin">
 
   <xacro:property name="servo_effort"    value="1.0"/>
-  <xacro:property name="servo_velocity"  value="1.0"/>
+  <xacro:property name="servo_velocity"  value="4.0"/>
   <xacro:property name="servo_torque"    value="0.5"/>
   <xacro:property name="servo_reduction" value="10.0"/>
 
@@ -308,7 +308,7 @@
       <mu2>50.0</mu2>
       <kp>1000000.0</kp>
       <kd>1.0</kd>
-      <fdir1>0 1 0</fdir1>
+      <fdir1>1 0 0</fdir1>
       <maxContacts>1</maxContacts>
       <minDepth>0.0001</minDepth>
       <collision name="${name}__paw_link_collision">
@@ -321,9 +321,9 @@
           <friction>
             <torsional>
                 <coefficient>10</coefficient>
-                <use_patch_radius>false</use_patch_radius>
-                <surface_radius>0.01</surface_radius>
-                <patch_radius>0.01</patch_radius>
+                <use_patch_radius>true</use_patch_radius>
+                <surface_radius>0.1</surface_radius>
+                <patch_radius>0.1</patch_radius>
             </torsional>
           </friction>
           <contact>

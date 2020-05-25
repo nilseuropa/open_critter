@@ -5,7 +5,7 @@
   <xacro:include filename="$(find open_critter)/xacro/leg.xacro"/>
 
   <xacro:property name="use_stand" value="false"/>
-  <xacro:property name="rubber_paw" value="false"/>
+  <xacro:property name="rubber_paw" value="true"/>
 
   <xacro:if value="${use_stand}">
     <link name="stand_link">

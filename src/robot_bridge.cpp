@@ -30,6 +30,8 @@ void callback(const std_msgs::Float64::ConstPtr &msg, const int &jointId) {
     if (ret < 0) ROS_ERROR("Can not send.");
 }
 
+// TODO: joint state update
+
 int main(int argc, char** argv){
   ros::init(argc, argv, "robot_bridge");
   ros::NodeHandle n;
